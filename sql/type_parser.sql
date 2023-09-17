@@ -65,3 +65,6 @@ ORDER BY 1, 2;
 -- test NULL as type string
 \pset null '<NULL>'
 SELECT parse_type_string(NULL);
+
+-- test nonexistent type
+SELECT parse_type_string('no_such_type');

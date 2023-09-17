@@ -123,3 +123,6 @@ SELECT parse_type_string(NULL);
  <NULL>
 (1 row)
 
+-- test nonexistent type
+SELECT parse_type_string('no_such_type');
+ERROR:  type "no_such_type" does not exist
