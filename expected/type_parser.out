@@ -1,19 +1,58 @@
 CREATE EXTENSION type_parser;
+-- test builtin types
 WITH t (type_str) AS (
   VALUES
     ('bit varying (42)'),
+    ('bool'),
+    ('boolean'),
+    ('bpchar (7)'),
+    ('char (42)'),
+    ('character (37)'),
+    ('character varying (37)'),
+    ('date'),
+    ('decimal (6,3)'),
+    ('decimal'),
     ('double precision'),
     ('float'),
     ('float4'),
     ('int'),
     ('int4'),
     ('integer'),
+    ('interval day to hour'),
+    ('interval day to minute'),
+    ('interval day to second (3)'),
+    ('interval day to second'),
+    ('interval day'),
+    ('interval hour to minute'),
+    ('interval hour to second (3)'),
+    ('interval hour to second'),
+    ('interval hour'),
+    ('interval minute to second (3)'),
+    ('interval minute to second'),
+    ('interval month'),
     ('interval second (3)'),
+    ('interval second'),
+    ('interval year to month'),
     ('interval year'),
+    ('interval year'),
+    ('interval'),
+    ('numeric (8,2)'),
+    ('numeric'),
     ('real'),
+    ('text'),
+    ('text[][]'),
+    ('time (3) with time zone'),
+    ('time with time zone'),
+    ('time without time zone'),
+    ('time'),
     ('timestamp (3) with time zone'),
+    ('timestamp (3) without time zone'),
+    ('timestamp'),
     ('timestamptz (3)'),
-    ('varbit(23)')
+    ('timetz (3)'),
+    ('timetz'),
+    ('varbit (23)'),
+    ('varchar (42)')
 )
 SELECT
   t.type_str,
@@ -21,20 +60,58 @@ SELECT
 FROM t
   CROSS JOIN parse_type_string(type_str) p
 ORDER BY 1, 2;
-           type_str           |         format_type         
-------------------------------+-----------------------------
- bit varying (42)             | bit varying(42)
- double precision             | double precision
- float                        | double precision
- float4                       | real
- int                          | integer
- int4                         | integer
- integer                      | integer
- interval second (3)          | interval second(3)
- interval year                | interval year
- real                         | real
- timestamp (3) with time zone | timestamp(3) with time zone
- timestamptz (3)              | timestamp(3) with time zone
- varbit(23)                   | bit varying(23)
-(13 rows)
+            type_str             |          format_type           
+---------------------------------+--------------------------------
+ bit varying (42)                | bit varying(42)
+ bool                            | boolean
+ boolean                         | boolean
+ bpchar (7)                      | character(7)
+ char (42)                       | character(42)
+ character (37)                  | character(37)
+ character varying (37)          | character varying(37)
+ date                            | date
+ decimal                         | numeric
+ decimal (6,3)                   | numeric(6,3)
+ double precision                | double precision
+ float                           | double precision
+ float4                          | real
+ int                             | integer
+ int4                            | integer
+ integer                         | integer
+ interval                        | interval
+ interval day                    | interval day
+ interval day to hour            | interval day to hour
+ interval day to minute          | interval day to minute
+ interval day to second          | interval day to second
+ interval day to second (3)      | interval day to second(3)
+ interval hour                   | interval hour
+ interval hour to minute         | interval hour to minute
+ interval hour to second         | interval hour to second
+ interval hour to second (3)     | interval hour to second(3)
+ interval minute to second       | interval minute to second
+ interval minute to second (3)   | interval minute to second(3)
+ interval month                  | interval month
+ interval second                 | interval second
+ interval second (3)             | interval second(3)
+ interval year                   | interval year
+ interval year                   | interval year
+ interval year to month          | interval year to month
+ numeric                         | numeric
+ numeric (8,2)                   | numeric(8,2)
+ real                            | real
+ text                            | text
+ text[][]                        | text[]
+ time                            | time without time zone
+ time (3) with time zone         | time(3) with time zone
+ timestamp                       | timestamp without time zone
+ timestamp (3) without time zone | timestamp(3) without time zone
+ timestamp (3) with time zone    | timestamp(3) with time zone
+ timestamptz (3)                 | timestamp(3) with time zone
+ timetz                          | time with time zone
+ timetz (3)                      | time(3) with time zone
+ time without time zone          | time without time zone
+ time with time zone             | time with time zone
+ varbit (23)                     | bit varying(23)
+ varchar (42)                    | character varying(42)
+(51 rows)
 
