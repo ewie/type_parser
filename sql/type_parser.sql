@@ -61,3 +61,7 @@ SELECT
 FROM t
   CROSS JOIN parse_type_string(type_str) p
 ORDER BY 1, 2;
+
+-- test NULL as type string
+\pset null '<NULL>'
+SELECT parse_type_string(NULL);

@@ -115,3 +115,11 @@ ORDER BY 1, 2;
  varchar (42)                    | character varying(42)
 (51 rows)
 
+-- test NULL as type string
+\pset null '<NULL>'
+SELECT parse_type_string(NULL);
+ parse_type_string 
+-------------------
+ <NULL>
+(1 row)
+
