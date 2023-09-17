@@ -56,11 +56,14 @@ WITH t (type_str) AS (
     ('varchar (42)')
 )
 SELECT
-  t.type_str,
-  format_type(p.typid, p.typmod)
+  type_str,
+  format_type
 FROM t
   CROSS JOIN parse_type_string(type_str) p
-ORDER BY 1, 2;
+  CROSS JOIN format_type(p.typid, p.typmod)
+ORDER BY
+  type_str COLLATE "C",
+  format_type COLLATE "C";
 
 -- test NULL as type string
 \pset null '<NULL>'

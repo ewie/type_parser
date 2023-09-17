@@ -55,11 +55,14 @@ WITH t (type_str) AS (
     ('varchar (42)')
 )
 SELECT
-  t.type_str,
-  format_type(p.typid, p.typmod)
+  type_str,
+  format_type
 FROM t
   CROSS JOIN parse_type_string(type_str) p
-ORDER BY 1, 2;
+  CROSS JOIN format_type(p.typid, p.typmod)
+ORDER BY
+  type_str COLLATE "C",
+  format_type COLLATE "C";
             type_str             |          format_type           
 ---------------------------------+--------------------------------
  bit varying (42)                | bit varying(42)
@@ -103,14 +106,14 @@ ORDER BY 1, 2;
  text[][]                        | text[]
  time                            | time without time zone
  time (3) with time zone         | time(3) with time zone
+ time with time zone             | time with time zone
+ time without time zone          | time without time zone
  timestamp                       | timestamp without time zone
- timestamp (3) without time zone | timestamp(3) without time zone
  timestamp (3) with time zone    | timestamp(3) with time zone
+ timestamp (3) without time zone | timestamp(3) without time zone
  timestamptz (3)                 | timestamp(3) with time zone
  timetz                          | time with time zone
  timetz (3)                      | time(3) with time zone
- time without time zone          | time without time zone
- time with time zone             | time with time zone
  varbit (23)                     | bit varying(23)
  varchar (42)                    | character varying(42)
 (51 rows)
