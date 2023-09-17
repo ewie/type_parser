@@ -126,3 +126,16 @@ SELECT parse_type_string(NULL);
 -- test nonexistent type
 SELECT parse_type_string('no_such_type');
 ERROR:  type "no_such_type" does not exist
+-- test custom type
+CREATE TYPE mytype AS (a int);
+SELECT format_type(typid, typmod)
+FROM parse_type_string('mytype');
+ format_type 
+-------------
+ mytype
+(1 row)
+
+-- test shell type
+CREATE TYPE myshell;
+SELECT parse_type_string('myshell');
+ERROR:  type "myshell" is only a shell

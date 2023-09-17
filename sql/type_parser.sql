@@ -68,3 +68,12 @@ SELECT parse_type_string(NULL);
 
 -- test nonexistent type
 SELECT parse_type_string('no_such_type');
+
+-- test custom type
+CREATE TYPE mytype AS (a int);
+SELECT format_type(typid, typmod)
+FROM parse_type_string('mytype');
+
+-- test shell type
+CREATE TYPE myshell;
+SELECT parse_type_string('myshell');
