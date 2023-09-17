@@ -44,7 +44,7 @@ write it in a `CREATE TABLE` command or `CAST` expression.  Then call
       CROSS JOIN parse_type_string(t.typstr) p
     ORDER BY 1, 2;
 
-               type_str           |         format_type
+                typstr            |         format_type
     ------------------------------+-----------------------------
      bit varying (42)             | bit varying(42)
      double precision             | double precision
